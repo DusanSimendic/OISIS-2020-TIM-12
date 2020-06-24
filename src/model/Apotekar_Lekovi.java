@@ -36,8 +36,10 @@ public class Apotekar_Lekovi extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 2210213495944272032L;
+	
 		Color col = new Color(29, 189, 78);
 		Color colPolje = new Color(29, 170, 78);
+		
 	public Apotekar_Lekovi() throws IOException  {
 		
 		
