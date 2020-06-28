@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,16 +31,29 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 
+import model.Apotekar_Lekovi;
+import model.Apotekar_Dodavanje;
+import model.Apotekar_Izmena;
+import model.Login_unos;
+import model.Apotekar_Dodavanje.Klik_Lekovi4;
+
+
 
 public class Apotekar_Prodaja extends JFrame {
+	
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2210213495944272032L;
+	private static final long serialVersionUID = 4012559381993734927L;
+	
+	
+	
 		Color col = new Color(29, 189, 78);
 		Color colPolje = new Color(29, 170, 78);
 	public Apotekar_Prodaja() throws IOException  {
+		
+		
 		
 		
 		 setTitle("Apoteka 12");
@@ -96,6 +111,7 @@ public class Apotekar_Prodaja extends JFrame {
 			dug1.setMinimumSize(new Dimension(300, 150));
 			dug1.setBackground(colPolje);
 			dug1.setForeground(new Color(0, 0, 0));
+			dug1.addMouseListener(new Klik_Lekovi1());
 			
 		JPanel polje2 = new JPanel();
 		polje2.setPreferredSize(new Dimension(200, 40));
@@ -114,6 +130,7 @@ public class Apotekar_Prodaja extends JFrame {
 		dug3.setMinimumSize(new Dimension(300, 150));
 		dug3.setBackground(colPolje);
 		dug3.setForeground(new Color(0, 0, 0));
+		dug3.addMouseListener(new Klik_Lekovi2());
 		
 		
 		JPanel polje4 = new JPanel();
@@ -124,6 +141,7 @@ public class Apotekar_Prodaja extends JFrame {
 		dug4.setMinimumSize(new Dimension(300, 150));
 		dug4.setBackground(colPolje);
 		dug4.setForeground(new Color(0, 0, 0));
+		dug4.addMouseListener(new Klik_Lekovi3());
 		
 		
 		JPanel polje5 = new JPanel();
@@ -134,6 +152,7 @@ public class Apotekar_Prodaja extends JFrame {
 		dug5.setMinimumSize(new Dimension(300, 150));
 		dug5.setBackground(colPolje);
 		dug5.setForeground(new Color(0, 0, 0));
+		dug5.addMouseListener(new Klik_Lekovi4());
 		 
 		 
 		 polje1.add(dug1);
@@ -166,9 +185,183 @@ public class Apotekar_Prodaja extends JFrame {
 		 
 		 prozor.add(glavniProzor);
 		 add(prozor, BorderLayout.CENTER);
-		 
-		 
-		 
+
+	}
+	
+	public class Klik_Lekovi1 implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+
+			
+			Apotekar_Lekovi al;
+			try {
+				al = new Apotekar_Lekovi();
+				al.setVisible(true);
+				setVisible(false);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	public class Klik_Lekovi2 implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Apotekar_Dodavanje ad;
+			try {
+				ad = new Apotekar_Dodavanje();
+				ad.setVisible(true);
+				setVisible(false);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	public class Klik_Lekovi3 implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Apotekar_Izmena ai;
+			try {
+				ai = new Apotekar_Izmena();
+				ai.setVisible(true);
+				setVisible(false);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
+	public class Klik_Lekovi4 implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Login_unos login;
+			try {
+				login = new Login_unos();
+				login.setVisible(true);
+				setVisible(false);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	
 }

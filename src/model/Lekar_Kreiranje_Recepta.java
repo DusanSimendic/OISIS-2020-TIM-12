@@ -30,29 +30,20 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import model.Apotekar_Prodaja;
-import model.Apotekar_Lekovi;
-import model.Apotekar_Dodavanje;
-import model.Login_unos;
 
 
-
-public class Apotekar_Izmena extends JFrame {
-	
-	
+public class Lekar_Kreiranje_Recepta extends JFrame {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -9212883715381460851L;
+	private static final long serialVersionUID = 2210213495944272032L;
 	
-
-	
-		Color col = new Color(29, 189, 78);
-		Color colPolje = new Color(29, 170, 78);
-	public Apotekar_Izmena() throws IOException  {
+		Color col = new Color(41, 113, 232);
+		Color colPolje = new Color(86, 143, 237);
 		
-
+	public Lekar_Kreiranje_Recepta() throws IOException  {
+		
 		
 		 setTitle("Apoteka 12");
 		 setSize(800,490);
@@ -73,17 +64,17 @@ public class Apotekar_Izmena extends JFrame {
 		 add(mid2, BorderLayout.SOUTH);
 		 
 		 JPanel header = new JPanel();
-		 header.setBackground(new Color(29, 189, 78));
+		 header.setBackground(col);
 		 header.setPreferredSize(new Dimension(800, 80));
 		 
 		 BoxLayout box=new BoxLayout(header, BoxLayout.X_AXIS);
 		 header.setLayout(box);
 		 
-		 BufferedImage slika = ImageIO.read(new File("externi_resursi/Apoteka.jpg"));
+		 BufferedImage slika = ImageIO.read(new File("externi_resursi/Lekar.jpg"));
 		 JLabel apoteka = new JLabel(new ImageIcon(slika));
 		 apoteka.setPreferredSize(new Dimension(150, 50));
 		 
-		 JLabel ime = new JLabel("Apotekar");
+		 JLabel ime = new JLabel("Lekar");
 		 ime.setSize(new Dimension(150, 50));
 		 
 		 header.add(apoteka, new FlowLayout(FlowLayout.LEFT));
@@ -97,7 +88,7 @@ public class Apotekar_Izmena extends JFrame {
 		 BoxLayout box3=new BoxLayout(meni, BoxLayout.Y_AXIS);
 		 meni.setLayout(box3);
 		 meni.setPreferredSize(new Dimension(220, 300));
-		 meni.setBackground(new Color(29, 189, 78));
+		 meni.setBackground(col);
 		 
 		 
 		 
@@ -109,49 +100,39 @@ public class Apotekar_Izmena extends JFrame {
 			dug1.setMinimumSize(new Dimension(300, 150));
 			dug1.setBackground(colPolje);
 			dug1.setForeground(new Color(0, 0, 0));
-			dug1.addMouseListener(new Klik_Lekovi3());
+			dug1.addMouseListener(new Klik_Lekar_Lekovi());
 			
 		JPanel polje2 = new JPanel();
 		polje2.setPreferredSize(new Dimension(200, 40));
 		polje2.setBackground(col);
-		JButton dug2 = new JButton("Prodaja Lekova");
+		JButton dug2 = new JButton("Recepti");
 		dug2.setPreferredSize(new Dimension(200, 40));
 		dug2.setMinimumSize(new Dimension(300, 150));
 		dug2.setBackground(colPolje);
 		dug2.setForeground(new Color(0, 0, 0));
-		dug2.addMouseListener(new Klik_Lekovi1());
+		dug2.addMouseListener(new Klik_Lekar_Recepti());
 		
 		
 		JPanel polje3 = new JPanel();
 		polje3.setPreferredSize(new Dimension(200, 40));
 		polje3.setBackground(col);
-		JButton dug3 = new JButton("Dodavanje Lekova");
+		JButton dug3 = new JButton("Kreriranje Recepta");
 		dug3.setPreferredSize(new Dimension(200, 40));
 		dug3.setMinimumSize(new Dimension(300, 150));
 		dug3.setBackground(colPolje);
-		dug3.setForeground(new Color(0, 0, 0));
-		dug3.addMouseListener(new Klik_Lekovi2());
+		dug3.setForeground(new Color(255, 255, 255));
 		
 		
 		JPanel polje4 = new JPanel();
 		polje4.setPreferredSize(new Dimension(200, 40));
 		polje4.setBackground(col);
-		JButton dug4 = new JButton("Izmena Lekova");
+		JButton dug4 = new JButton("Odjava");
 		dug4.setPreferredSize(new Dimension(200, 40));
 		dug4.setMinimumSize(new Dimension(300, 150));
 		dug4.setBackground(colPolje);
-		dug4.setForeground(new Color(255, 255, 255));
+		dug4.setForeground(new Color(0, 0, 0));
+		dug4.addMouseListener(new Klik_Odjava());
 		
-		
-		JPanel polje5 = new JPanel();
-		polje5.setPreferredSize(new Dimension(200, 40));
-		polje5.setBackground(col);
-		JButton dug5 = new JButton("Odjava");
-		dug5.setPreferredSize(new Dimension(200, 40));
-		dug5.setMinimumSize(new Dimension(300, 150));
-		dug5.setBackground(colPolje);
-		dug5.setForeground(new Color(0, 0, 0));
-		dug5.addMouseListener(new Klik_Lekovi4());
 		 
 		 
 		 polje1.add(dug1);
@@ -166,9 +147,7 @@ public class Apotekar_Izmena extends JFrame {
 		 polje4.add(dug4);
 		 meni.add(polje4);
 		 meni.add(Box.createVerticalStrut(5)); 
-		 polje5.add(dug5);
-		 meni.add(polje5);
-		 meni.add(Box.createVerticalStrut(5)); 
+
 		 
 		 add(meni, BorderLayout.WEST);
 		 
@@ -184,19 +163,21 @@ public class Apotekar_Izmena extends JFrame {
 		 
 		 prozor.add(glavniProzor);
 		 add(prozor, BorderLayout.CENTER);
- 
+		 
+		 
+		 
 	}
 	
-	public class Klik_Lekovi1 implements MouseListener {
+	public class Klik_Lekar_Recepti implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
 			
-			Apotekar_Prodaja ap;
+			Lekar_Recepti lr;
 			try {
-				ap = new Apotekar_Prodaja();
-				ap.setVisible(true);
+				lr = new Lekar_Recepti();
+				lr.setVisible(true);
 				setVisible(false);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -233,14 +214,14 @@ public class Apotekar_Izmena extends JFrame {
 		
 	}
 	
-	public class Klik_Lekovi2 implements MouseListener {
+	public class Klik_Lekar_Lekovi implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			Apotekar_Dodavanje ad;
+			Lekar_Lekovi ll;
 			try {
-				ad = new Apotekar_Dodavanje();
-				ad.setVisible(true);
+				ll = new Lekar_Lekovi();
+				ll.setVisible(true);
 				setVisible(false);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -276,50 +257,7 @@ public class Apotekar_Izmena extends JFrame {
 		
 	}
 	
-	public class Klik_Lekovi3 implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			Apotekar_Lekovi al;
-			try {
-				al = new Apotekar_Lekovi();
-				al.setVisible(true);
-				setVisible(false);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-
-	public class Klik_Lekovi4 implements MouseListener {
+	public class Klik_Odjava implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -361,4 +299,5 @@ public class Apotekar_Izmena extends JFrame {
 		}
 		
 	}
+
 }
