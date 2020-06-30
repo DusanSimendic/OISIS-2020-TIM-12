@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -30,6 +31,8 @@ import javax.swing.WindowConstants;
 
 import com.sun.imageio.stream.StreamCloser.CloseAction;
 
+import application.Konekcija_Baza;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,6 +45,7 @@ import model.Apotekar_Lekovi;
 import model.Login_unos;
 import model.Login_unos.TXTLozinka;
 import model.Login_unos.TXTUser;
+import utils.Lek;
 
 
 public class Apotekar_Dodavanje extends JFrame {
@@ -67,6 +71,8 @@ public class Apotekar_Dodavanje extends JFrame {
 		JCheckBox da = new JCheckBox();
 	    JCheckBox ne = new JCheckBox();
 	    JLabel lblNaslov = new JLabel("Dodavanje Leka");
+	    
+	    Konekcija_Baza conn = new Konekcija_Baza();
 		
 	public Apotekar_Dodavanje() throws IOException  {
 		
@@ -299,22 +305,23 @@ public class Apotekar_Dodavanje extends JFrame {
 	     lblRecept.setFont(new Font("Montserrat", Font.ITALIC, 20));
 	     lblRecept.setPreferredSize(new Dimension(150,30));
 	     
-	     JLabel lblDa = new JLabel("Da:");
+	     JLabel lblDa = new JLabel("Da");
 	     lblDa.setFont(new Font("Montserrat", Font.ITALIC, 20));
 	     lblDa.setPreferredSize(new Dimension(40,30));
 	     
-	     JLabel lblNe = new JLabel("Ne:");
+	     JLabel lblNe = new JLabel("Ne");
 	     lblNe.setFont(new Font("Montserrat", Font.ITALIC, 20));
 	     lblNe.setPreferredSize(new Dimension(40,30));
 	     
 	     panRecept.add(Box.createHorizontalStrut(20)); 
 	     panRecept.add(lblRecept);
 	     panRecept.add(Box.createHorizontalStrut(100)); 
-	     panRecept.add(lblDa);
 	     panRecept.add(da);
-	     panRecept.add(Box.createHorizontalStrut(50)); 
-	     panRecept.add(lblNe);
+	     panRecept.add(lblDa);
+	     panRecept.add(Box.createHorizontalStrut(50));
 	     panRecept.add(ne);
+	     panRecept.add(lblNe);
+	     
 	     
 	     //
 	     
@@ -328,13 +335,14 @@ public class Apotekar_Dodavanje extends JFrame {
 	     panDodaj.add(dodajLek);
 	     
 	     glavniProzor.add(panNaslov);
+	     glavniProzor.add(Box.createVerticalStrut(15));
 	     glavniProzor.add(panIme);
 	     glavniProzor.add(panSifra);
 	     glavniProzor.add(panProizvodjac);
 	     glavniProzor.add(panCena);
 	     glavniProzor.add(panRecept);
 	     glavniProzor.add(panDodaj);
-	     glavniProzor.add(Box.createVerticalStrut(10));
+	     glavniProzor.add(Box.createVerticalStrut(15));
 		 
 		 
 		 prozor.add(glavniProzor);
@@ -349,9 +357,47 @@ public class Apotekar_Dodavanje extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
+			try {
+				
+			
+			if(txtIme.getText() != null && txtSifra.getText() != null && Proizvodjac.getText() != null &&
+					Cena.getText() != null && (da.isSelected() || ne.isSelected())) {
+			Lek l_novi = new Lek();
+			l_novi.setIDLeka(conn.Lekovi().get(conn.Lekovi().size()-1).getIDLeka() + 1);
+			l_novi.setSifraLeka(txtSifra.getText());
+			l_novi.setImeLeka(txtIme.getText());
+			l_novi.setProizvodjac(Proizvodjac.getText());
+			if(da.isSelected()) {
+				l_novi.setRecept("Da");
+				}
+				else {
+					l_novi.setRecept("Ne");
+				}
+			int jml = Integer.parseInt(Cena.getText());
+			l_novi.setCena(jml);
+			conn.DodajLek(l_novi);
 			Dodaj_Lek_Dialog dialog = new Dodaj_Lek_Dialog();
 			dialog.setVisible(true);
 			dialog.setLocationRelativeTo(lblNaslov);
+			txtIme.setText(null);
+			txtSifra.setText(null);
+			Proizvodjac.setText(null);
+			Cena.setText(null);
+			da.setSelected(false);
+			ne.setSelected(false);
+			}
+			else {
+				Dodaj_Lek_Greska greska = new Dodaj_Lek_Greska();
+				greska.setVisible(true);
+				greska.setLocationRelativeTo(lblNaslov);
+			}
+			}
+			catch(Exception eX) {
+				Dodaj_Lek_Greska greska = new Dodaj_Lek_Greska();
+				greska.setVisible(true);
+				greska.setLocationRelativeTo(lblNaslov);
+			}
+				
 		}
 
 		@Override
@@ -513,6 +559,9 @@ public class Apotekar_Dodavanje extends JFrame {
 				al.setVisible(true);
 				setVisible(false);
 			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

@@ -3,29 +3,22 @@ package model;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
+import javax.swing.JTextField;
 
-public class Dodaj_Lek_Dialog extends JDialog{
+public class Izmeni_Lek_Dialog extends JDialog {
 
-
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -916797270740446672L;
-
-	public Dodaj_Lek_Dialog(){
-
+	private static final long serialVersionUID = -574488813735241951L;
+	
+	public Izmeni_Lek_Dialog(JTextField arg0) {
+		
 		setBackground(new Color(255,255,255));
 		setSize(300,100);
 		setMinimumSize(new Dimension(300,100));
@@ -33,15 +26,15 @@ public class Dodaj_Lek_Dialog extends JDialog{
 		
 		
 		JPanel prozorD = new JPanel();
-		prozorD.setBackground(new Color(255, 255, 255));
+		prozorD.setBackground(new Color(255,255,255));
 		BoxLayout box=new BoxLayout(prozorD, BoxLayout.Y_AXIS);
 		prozorD.setLayout(box);
 		
 		JPanel panPoruka = new JPanel();
 		panPoruka.setSize(250,50);
-		panPoruka.setBackground(new Color(255, 255, 255));
+		panPoruka.setBackground(new Color(255,255,255));
 		JLabel poruka = new JLabel();
-		poruka.setText("Uspesno ste dodali lek u bazu podataka");
+		poruka.setText("Uspesno ste izmenili lek pod sifrom: "+ arg0.getText());
 		poruka.setFont(new Font("Montserrat", Font.ITALIC, 14));
 		
 		
@@ -51,12 +44,6 @@ public class Dodaj_Lek_Dialog extends JDialog{
 		prozorD.add(panPoruka);
 		
 		add(prozorD);
-		
-		
-		
-		
 	}
-	
-	
 
 }

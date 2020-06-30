@@ -12,6 +12,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -22,12 +24,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
 
+import application.Konekcija_Baza;
+
+import utils.Korisnik;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 
@@ -42,6 +50,17 @@ public class Admin_Prikaz extends JFrame {
 	private static final long serialVersionUID = 9202446953706427097L;
 		Color col = new Color(255, 134, 123);
 		Color colPolje = new Color(255, 178, 171);
+		
+		Konekcija_Baza conn = new Konekcija_Baza();
+		
+		JButton dugIme = new JButton("Po Imenu");
+		JButton dugPrezime = new JButton("Po Prezimenu");
+		JButton dugTip = new JButton("Po Tipu");
+		
+		DefaultTableModel dtm = new DefaultTableModel();
+		List<Korisnik> korisnici = null;
+		
+		
 		
 	public Admin_Prikaz() throws IOException  {
 		
@@ -76,6 +95,7 @@ public class Admin_Prikaz extends JFrame {
 		 apoteka.setPreferredSize(new Dimension(150, 50));
 		 
 		 JLabel ime = new JLabel("Administrator");
+		 ime.setFont(new Font("Montserrat", Font.ITALIC, 30));
 		 ime.setSize(new Dimension(150, 50));
 		 
 		 header.add(apoteka, new FlowLayout(FlowLayout.LEFT));
@@ -97,6 +117,7 @@ public class Admin_Prikaz extends JFrame {
 		 polje1.setPreferredSize(new Dimension(180, 30));
 		 polje1.setBackground(col);
 		 JButton dug1 = new JButton("Dodavanje_Leka");
+		 dug1.setFont(new Font("Montserrat", Font.ITALIC, 16));
 			dug1.setPreferredSize(new Dimension(200, 40));
 			dug1.setMinimumSize(new Dimension(300, 150));
 			dug1.setBackground(colPolje);
@@ -107,6 +128,7 @@ public class Admin_Prikaz extends JFrame {
 		polje2.setPreferredSize(new Dimension(180, 30));
 		polje2.setBackground(col);
 		JButton dug2 = new JButton("Izmena_Leka");
+		dug2.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug2.setPreferredSize(new Dimension(200, 40));
 		dug2.setMinimumSize(new Dimension(300, 150));
 		dug2.setBackground(colPolje);
@@ -117,6 +139,7 @@ public class Admin_Prikaz extends JFrame {
 		polje3.setPreferredSize(new Dimension(180, 30));
 		polje3.setBackground(col);
 		JButton dug3 = new JButton("Registracija");
+		dug3.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug3.setPreferredSize(new Dimension(200, 40));
 		dug3.setMinimumSize(new Dimension(300, 150));
 		dug3.setBackground(colPolje);
@@ -128,6 +151,7 @@ public class Admin_Prikaz extends JFrame {
 		polje4.setPreferredSize(new Dimension(180, 30));
 		polje4.setBackground(col);
 		JButton dug4 = new JButton("Prikaz Korisnika");
+		dug4.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug4.setPreferredSize(new Dimension(200, 40));
 		dug4.setMinimumSize(new Dimension(300, 150));
 		dug4.setBackground(colPolje);
@@ -137,6 +161,7 @@ public class Admin_Prikaz extends JFrame {
 		polje5.setPreferredSize(new Dimension(180, 30));
 		polje5.setBackground(col);
 		JButton dug5 = new JButton("Kreriranje Izvestaja");
+		dug5.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug5.setPreferredSize(new Dimension(200, 40));
 		dug5.setMinimumSize(new Dimension(300, 150));
 		dug5.setBackground(colPolje);
@@ -147,6 +172,7 @@ public class Admin_Prikaz extends JFrame {
 		polje6.setPreferredSize(new Dimension(180, 30));
 		polje6.setBackground(col);
 		JButton dug6 = new JButton("Logicko Brisanje");
+		dug6.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug6.setPreferredSize(new Dimension(200, 40));
 		dug6.setMinimumSize(new Dimension(300, 150));
 		dug6.setBackground(colPolje);
@@ -157,6 +183,7 @@ public class Admin_Prikaz extends JFrame {
 		polje7.setPreferredSize(new Dimension(180, 30));
 		polje7.setBackground(col);
 		JButton dug7 = new JButton("Odjava");
+		dug7.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug7.setPreferredSize(new Dimension(200, 40));
 		dug7.setMinimumSize(new Dimension(300, 150));
 		dug7.setBackground(colPolje);
@@ -198,13 +225,288 @@ public class Admin_Prikaz extends JFrame {
 		 
 		 JPanel glavniProzor = new JPanel();
 		 glavniProzor.setBackground(new Color(255, 255, 255));
+		 BoxLayout boxGlavni=new BoxLayout(glavniProzor, BoxLayout.Y_AXIS);
+		 glavniProzor.setLayout(boxGlavni);
 		 
+		 JPanel panNaslov = new JPanel();
+		 panNaslov.setBackground(new Color(255, 255, 255));
+		 
+		 JLabel lblNaslov = new JLabel("Prikaz Korisnika");
+	     lblNaslov.setFont(new Font("Montserrat", Font.ITALIC, 28));
+	     lblNaslov.setPreferredSize(new Dimension(300,30));
+	     panNaslov.add(Box.createHorizontalStrut(120)); 
+	     panNaslov.add(lblNaslov);
+	     
+	     
+		 
+		 JPanel komponente = new JPanel();
+		 BoxLayout boxKomp=new BoxLayout(komponente, BoxLayout.X_AXIS);
+		 komponente.setLayout(boxKomp);
+		 komponente.setBackground(new Color(255,255,255));
+		 dugIme.setBackground(colPolje);
+		 dugIme.addMouseListener(new PrikazKorisnikaIme());
+		 dugIme.setPreferredSize(new Dimension(100,30));
+		 
+		 dugPrezime.setBackground(colPolje);
+		 dugPrezime.addMouseListener(new PrikazKorisnikaPrezime());
+		 dugPrezime.setPreferredSize(new Dimension(100,30));
+		 
+		 dugTip.setBackground(colPolje);
+		 dugTip.addMouseListener(new PrikazKorisnikaTip());
+		 dugTip.setPreferredSize(new Dimension(100,30));
+		 
+		 komponente.add(dugIme);
+		 komponente.add(Box.createHorizontalStrut(10));
+		 komponente.add(dugPrezime);
+		 komponente.add(Box.createHorizontalStrut(10));
+		 komponente.add(dugTip);
+		 
+		 JPanel panelTabela = new JPanel();
+		 panelTabela.setBackground(new Color(255, 255, 255));
+		 
+		 dtm.addColumn("Ime");
+		 dtm.addColumn("Prezime");
+		 dtm.addColumn("Tip Korisnika");
+		 
+		 
+		try {
+			korisnici = conn.Korisnici();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		 
+		 for(int i = 0; i < korisnici.size(); i++) {
+			 Korisnik k = korisnici.get(i);
+			 dtm.addRow(new Object[] {k.getIme(), k.getPrezime(), k.getTip()});
+		 }
+		 
+		 JTable tabelaKor = new JTable(dtm);
+		 tabelaKor.setFont(new Font("Montserrat", Font.ITALIC, 14));
+		 tabelaKor.setBackground(col);
+		 
+		 
+		 JScrollPane tabelMain = new JScrollPane(tabelaKor);
+		 tabelMain.setPreferredSize(new Dimension(550, 100));
+		 panelTabela.add(tabelMain);
+		 
+		 glavniProzor.add(panNaslov);
+		 glavniProzor.add(Box.createVerticalStrut(30));
+		 glavniProzor.add(komponente);
+		 glavniProzor.add(Box.createVerticalStrut(5));
+		 glavniProzor.add(panelTabela);
 		 
 		 prozor.add(glavniProzor);
 		 add(prozor, BorderLayout.CENTER);
 		 
 	}
 	
+	public class PrikazKorisnikaIme implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			int broj = 0;
+			 if(broj != 0) {
+				 for(int i = 0; i <= korisnici.size(); i++) {
+					 korisnici.remove(i);
+					 dtm.removeRow(i); 		 
+				 }
+			 }
+			 else {
+				 broj = 1;
+			 }
+			 
+			try {
+				korisnici = conn.KorisniciIme();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			 
+			 for(int i = 0; i < dtm.getRowCount(); i++) {
+				 for(int j = 0; j < dtm.getColumnCount(); j++) {
+					 Korisnik k = korisnici.get(i);
+					 if(j == 0) {
+						 dtm.setValueAt(k.getIme(), i, j);
+					}
+					 else if(j == 1) {
+						 dtm.setValueAt(k.getPrezime(), i, j);
+					}
+					 else {
+						 dtm.setValueAt(k.getTip(), i, j);
+					}
+				
+
+				 }
+					 
+			 }
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
+	public class PrikazKorisnikaPrezime implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			int broj = 0;
+			 if(broj != 0) {
+				 for(int i = 0; i <= korisnici.size(); i++) {
+					 korisnici.remove(i);
+					 dtm.removeRow(i); 		 
+				 }
+			 }
+			 else {
+				 broj = 1;
+			 }
+			 
+			try {
+				korisnici = conn.KorisniciPrezime();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			 
+			 for(int i = 0; i < dtm.getRowCount(); i++) {
+				 for(int j = 0; j < dtm.getColumnCount(); j++) {
+					 Korisnik k = korisnici.get(i);
+					 if(j == 0) {
+						 dtm.setValueAt(k.getIme(), i, j);
+					}
+					 else if(j == 1) {
+						 dtm.setValueAt(k.getPrezime(), i, j);
+					}
+					 else {
+						 dtm.setValueAt(k.getTip(), i, j);
+					}
+				
+
+				 }
+					 
+			 }
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	public class PrikazKorisnikaTip implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			int broj = 0;
+			 if(broj != 0) {
+				 for(int i = 0; i <= korisnici.size(); i++) {
+					 korisnici.remove(i);
+					 dtm.removeRow(i); 		 
+				 }
+			 }
+			 else {
+				 broj = 1;
+			 }
+			 
+			try {
+				korisnici = conn.KorisniciTip();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			 
+			 for(int i = 0; i < dtm.getRowCount(); i++) {
+				 for(int j = 0; j < dtm.getColumnCount(); j++) {
+					 Korisnik k = korisnici.get(i);
+					 if(j == 0) {
+						 dtm.setValueAt(k.getIme(), i, j);
+					}
+					 else if(j == 1) {
+						 dtm.setValueAt(k.getPrezime(), i, j);
+					}
+					 else {
+						 dtm.setValueAt(k.getTip(), i, j);
+					}
+				
+
+				 }
+					 
+			 }
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	public class Klik_Admin_Dodavanje implements MouseListener {
 
 		@Override

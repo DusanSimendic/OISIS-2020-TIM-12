@@ -16,6 +16,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -27,6 +29,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import application.Konekcija_Baza;
+import utils.Korisnik;
+import utils.Logovan;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -46,6 +51,10 @@ public class Login_unos extends JFrame {
 	JTextField txtUser=new JTextField();
 	JTextField txtLozinka=new JTextField();
 	JButton loginDugme = new JButton("PRIJAVI SE");
+	Logovan log = new Logovan();
+	int user;
+	
+	Konekcija_Baza conn = new Konekcija_Baza();
 	
 	public Login_unos() throws IOException {
 		
@@ -77,12 +86,14 @@ public class Login_unos extends JFrame {
 		 field.setBackground(new Color(255, 255, 255));
 		 BoxLayout box=new BoxLayout(field, BoxLayout.Y_AXIS);
 		 field.setLayout(box);
+		 field.setOpaque(false);
 		 
 		 Dimension dim=new Dimension(200,30);
 
 			
 			JPanel panUsername=new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panUsername.setBackground(new Color(255, 255, 255));
+			panUsername.setOpaque(false);
 
 	        
 	        txtUser.setFont(new Font("Montserrat", Font.PLAIN, 11));
@@ -94,6 +105,7 @@ public class Login_unos extends JFrame {
 	       
 	        JPanel panLozinka=new JPanel(new FlowLayout(FlowLayout.LEFT));
 	        panLozinka.setBackground(new Color(255, 255, 255));
+	        panLozinka.setOpaque(false);
 	        
 	       
 	        txtLozinka.setFont(new Font("Montserrat", Font.PLAIN, 11));
@@ -126,7 +138,10 @@ public class Login_unos extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			txtUser.setText("");
+			if(txtUser.getText().contentEquals("Korisnicko Ime")) {
+				txtUser.setText("");
+			}
+			
 		}
 
 		@Override
@@ -160,7 +175,9 @@ public class Login_unos extends JFrame {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			txtLozinka.setText("");
+			if(txtLozinka.getText().contentEquals("Lozinka")) {
+				txtLozinka.setText("");
+			}
 		}
 
 		@Override
@@ -194,14 +211,53 @@ public class Login_unos extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if(txtUser.getText().compareTo("Apotekar") == 0 && txtLozinka.getText().compareTo("Apotekar") == 0) {
-				loginDugme.addMouseListener(new Klik_Apotekar());
+			List<Korisnik> korisnici = null;
+			try {
+				korisnici = conn.Korisnici();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			else if(txtUser.getText().compareTo("Lekar") == 0 && txtLozinka.getText().compareTo("Lekar") == 0) {
-				loginDugme.addMouseListener(new Klik_Lekar());
-			}
-			else if(txtUser.getText().compareTo("Admin") == 0 && txtLozinka.getText().compareTo("Admin") == 0) {
-				loginDugme.addMouseListener(new Klik_Admin());
+			
+			for(int i = 0; i < korisnici.size(); i++) {
+				if(korisnici.get(i).getUser().equals(txtUser.getText())){
+					if(korisnici.get(i).getPass().equals(txtLozinka.getText())) {
+						user = korisnici.get(i).getIDKorisnika();
+						
+						log.setSifra(user);
+						if(korisnici.get(i).getTip().equals("Apotekar")) {
+							try {
+								
+								Apotekar_Lekovi ll = new Apotekar_Lekovi();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							setVisible(false);
+						}
+						else if(korisnici.get(i).getTip().equals("Lekar")) {
+							try {
+								Lekar_Lekovi lek = new Lekar_Lekovi();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							setVisible(false);
+						}
+						else {
+							try {
+								Admin_Dodavanje_Leka ad = new Admin_Dodavanje_Leka();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} 
+							setVisible(false);
+						}
+					}
+				}
 			}
 		}
 		
@@ -220,6 +276,9 @@ public class Login_unos extends JFrame {
 				al.setVisible(true);
 				setVisible(false);
 			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

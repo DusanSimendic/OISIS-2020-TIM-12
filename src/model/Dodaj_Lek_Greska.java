@@ -1,34 +1,24 @@
 package model;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
-public class Dodaj_Lek_Dialog extends JDialog{
+public class Dodaj_Lek_Greska extends JDialog {
 
-
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -916797270740446672L;
-
-	public Dodaj_Lek_Dialog(){
-
+	private static final long serialVersionUID = -5749507357729295710L;
+	
+	public Dodaj_Lek_Greska() {
+		
 		setBackground(new Color(255,255,255));
 		setSize(300,100);
-		setMinimumSize(new Dimension(300,100));
 		setTitle("Poruka");
 		
 		
@@ -41,22 +31,24 @@ public class Dodaj_Lek_Dialog extends JDialog{
 		panPoruka.setSize(250,50);
 		panPoruka.setBackground(new Color(255, 255, 255));
 		JLabel poruka = new JLabel();
-		poruka.setText("Uspesno ste dodali lek u bazu podataka");
+		poruka.setText("GREŠKA!!!");
 		poruka.setFont(new Font("Montserrat", Font.ITALIC, 14));
 		
+		JPanel panPoruka1 = new JPanel();
+		panPoruka1.setSize(250,50);
+		panPoruka1.setBackground(new Color(255, 255, 255));
+		JLabel poruka1 = new JLabel();
+		poruka1.setText("Unos nije pravilan proverite podatke ponovo");
+		poruka1.setFont(new Font("Montserrat", Font.ITALIC, 14));
 		
 		
 		
+		panPoruka1.add(poruka1);
 		panPoruka.add(poruka);
 		prozorD.add(panPoruka);
+		prozorD.add(panPoruka1);
 		
 		add(prozorD);
-		
-		
-		
-		
 	}
-	
-	
 
 }

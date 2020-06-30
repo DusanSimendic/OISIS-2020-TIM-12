@@ -23,6 +23,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import application.Konekcija_Baza;
+import model.Apotekar_Izmena.Izmeni_Lek;
+import utils.BrisaniPodaci;
+import utils.Lek;
+import utils.Logovan;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -42,6 +47,15 @@ public class Admin_Izmena_Leka extends JFrame {
 	private static final long serialVersionUID = -8202382764942555786L;
 		Color col = new Color(255, 134, 123);
 		Color colPolje = new Color(255, 178, 171);
+		
+		JTextField novoImeA=new JTextField();
+		JTextField txtSifra1A=new JTextField();
+		JTextField noviProizvodjacA = new JTextField();
+		JTextField novaCenaA = new JTextField();
+		JButton izmeniLekA = new JButton("Izmeni lek");
+	    JLabel lblNaslov1A = new JLabel("Izmena Leka");
+	    
+	    Konekcija_Baza conn = new Konekcija_Baza();
 		
 	public Admin_Izmena_Leka() throws IOException  {
 		
@@ -76,6 +90,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		 apoteka.setPreferredSize(new Dimension(150, 50));
 		 
 		 JLabel ime = new JLabel("Administrator");
+		 ime.setFont(new Font("Montserrat", Font.ITALIC, 30));
 		 ime.setSize(new Dimension(150, 50));
 		 
 		 header.add(apoteka, new FlowLayout(FlowLayout.LEFT));
@@ -97,6 +112,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		 polje1.setPreferredSize(new Dimension(180, 30));
 		 polje1.setBackground(col);
 		 JButton dug1 = new JButton("Dodavanje_Leka");
+		 	dug1.setFont(new Font("Montserrat", Font.ITALIC, 16));
 			dug1.setPreferredSize(new Dimension(200, 40));
 			dug1.setMinimumSize(new Dimension(300, 150));
 			dug1.setBackground(colPolje);
@@ -107,6 +123,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		polje2.setPreferredSize(new Dimension(180, 30));
 		polje2.setBackground(col);
 		JButton dug2 = new JButton("Izmena_Leka");
+		dug2.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug2.setPreferredSize(new Dimension(200, 40));
 		dug2.setMinimumSize(new Dimension(300, 150));
 		dug2.setBackground(colPolje);
@@ -116,6 +133,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		polje3.setPreferredSize(new Dimension(180, 30));
 		polje3.setBackground(col);
 		JButton dug3 = new JButton("Registracija");
+		dug3.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug3.setPreferredSize(new Dimension(200, 40));
 		dug3.setMinimumSize(new Dimension(300, 150));
 		dug3.setBackground(colPolje);
@@ -126,6 +144,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		polje4.setPreferredSize(new Dimension(180, 30));
 		polje4.setBackground(col);
 		JButton dug4 = new JButton("Prikaz Korisnika");
+		dug4.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug4.setPreferredSize(new Dimension(200, 40));
 		dug4.setMinimumSize(new Dimension(300, 150));
 		dug4.setBackground(colPolje);
@@ -136,6 +155,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		polje5.setPreferredSize(new Dimension(180, 30));
 		polje5.setBackground(col);
 		JButton dug5 = new JButton("Kreriranje Izvestaja");
+		dug5.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug5.setPreferredSize(new Dimension(200, 40));
 		dug5.setMinimumSize(new Dimension(300, 150));
 		dug5.setBackground(colPolje);
@@ -146,6 +166,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		polje6.setPreferredSize(new Dimension(180, 30));
 		polje6.setBackground(col);
 		JButton dug6 = new JButton("Logicko Brisanje");
+		dug6.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug6.setPreferredSize(new Dimension(200, 40));
 		dug6.setMinimumSize(new Dimension(300, 150));
 		dug6.setBackground(colPolje);
@@ -156,6 +177,7 @@ public class Admin_Izmena_Leka extends JFrame {
 		polje7.setPreferredSize(new Dimension(180, 30));
 		polje7.setBackground(col);
 		JButton dug7 = new JButton("Odjava");
+		dug7.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug7.setPreferredSize(new Dimension(200, 40));
 		dug7.setMinimumSize(new Dimension(300, 150));
 		dug7.setBackground(colPolje);
@@ -197,6 +219,113 @@ public class Admin_Izmena_Leka extends JFrame {
 		 
 		 JPanel glavniProzor = new JPanel();
 		 glavniProzor.setBackground(new Color(255, 255, 255));
+		 BoxLayout boxGlavni=new BoxLayout(glavniProzor, BoxLayout.Y_AXIS);
+		 glavniProzor.setLayout(boxGlavni);
+		 
+		 
+		 JPanel panNaslov=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		 panNaslov.setBackground(new Color(255, 255, 255));
+	
+	     lblNaslov1A.setFont(new Font("Montserrat", Font.ITALIC, 28));
+	     lblNaslov1A.setPreferredSize(new Dimension(300,30));
+	     
+	     panNaslov.add(Box.createHorizontalStrut(150)); 
+	     panNaslov.add(lblNaslov1A);
+		 
+	     
+	       
+	     JPanel panSifra=new JPanel(new FlowLayout(FlowLayout.LEFT));
+	     panSifra.setBackground(new Color(255, 255, 255));
+	     
+	     JLabel lblSifra = new JLabel("Sifra:");
+	     lblSifra.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     lblSifra.setPreferredSize(new Dimension(150,30));
+	        
+	       
+	     txtSifra1A.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     txtSifra1A.setPreferredSize(new Dimension(250,30));
+	     
+	     panSifra.add(Box.createHorizontalStrut(20));
+	     panSifra.add(lblSifra);
+	     panSifra.add(Box.createHorizontalStrut(70)); 
+	     panSifra.add(txtSifra1A);
+	     
+	     
+	     JPanel panIme=new JPanel(new FlowLayout(FlowLayout.LEFT));
+		 panIme.setBackground(new Color(255, 255, 255));
+
+	        
+	     novoImeA.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     novoImeA.setPreferredSize(new Dimension(250,30));
+	     
+	     JLabel lblIme = new JLabel("Novo Ime:");
+	     lblIme.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     lblIme.setPreferredSize(new Dimension(150,30));
+	     
+	     panIme.add(Box.createHorizontalStrut(20)); 
+	     panIme.add(lblIme);
+	     panIme.add(Box.createHorizontalStrut(70)); 
+	     panIme.add(novoImeA);
+	     
+	     //
+	     
+	     JPanel panProizvodjac=new JPanel(new FlowLayout(FlowLayout.LEFT));
+	     panProizvodjac.setBackground(new Color(255, 255, 255));
+
+	        
+	     noviProizvodjacA.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     noviProizvodjacA.setPreferredSize(new Dimension(250,30));
+	     
+	     JLabel lblProizvodjac = new JLabel("Novi Prozivodjac:");
+	     lblProizvodjac.setFont(new Font("Montserrat", Font.ITALIC, 16));
+	     lblProizvodjac.setPreferredSize(new Dimension(150,30));
+	     
+	     panProizvodjac.add(Box.createHorizontalStrut(20)); 
+	     panProizvodjac.add(lblProizvodjac);
+	     panProizvodjac.add(Box.createHorizontalStrut(70)); 
+	     panProizvodjac.add(noviProizvodjacA);
+	     
+	     //
+	     
+	     JPanel panCena=new JPanel(new FlowLayout(FlowLayout.LEFT));
+	     panCena.setBackground(new Color(255, 255, 255));
+
+	        
+	     novaCenaA.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     novaCenaA.setPreferredSize(new Dimension(250,30));
+	     
+	     JLabel lblCena = new JLabel("Nova Cena:");
+	     lblCena.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     lblCena.setPreferredSize(new Dimension(150,30));
+	     
+	     panCena.add(Box.createHorizontalStrut(20)); 
+	     panCena.add(lblCena);
+	     panCena.add(Box.createHorizontalStrut(70)); 
+	     panCena.add(novaCenaA);
+	     
+	     
+	    
+	     
+	     
+	     //
+	     
+	     JPanel panDodaj=new JPanel();
+	     panDodaj.setBackground(new Color(255, 255, 255));
+	     izmeniLekA.setPreferredSize(new Dimension(200, 50));
+	     izmeniLekA.setBackground(col);
+	     izmeniLekA.addMouseListener(new Izmeni_Lek());
+	     izmeniLekA.setFont(new Font("Montserrat", Font.ITALIC, 20));
+	     
+	     panDodaj.add(izmeniLekA);
+	     
+	     glavniProzor.add(panNaslov);
+	     glavniProzor.add(Box.createVerticalStrut(15));
+	     glavniProzor.add(panSifra);
+	     glavniProzor.add(panIme);
+	     glavniProzor.add(panProizvodjac);
+	     glavniProzor.add(panCena);
+	     glavniProzor.add(panDodaj);
+	     glavniProzor.add(Box.createVerticalStrut(15));
 		 
 		 
 		 prozor.add(glavniProzor);
@@ -204,6 +333,79 @@ public class Admin_Izmena_Leka extends JFrame {
 		 
 		 
 		 
+	}
+	
+	public class Izmeni_Lek implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			try {
+				
+				
+				if(novoImeA.getText() != null && txtSifra1A.getText() != null && noviProizvodjacA.getText() != null
+						&& novaCenaA.getText() != null) {
+					Lek l_izmena = new Lek();
+					l_izmena.setImeLeka(novoImeA.getText());
+					l_izmena.setProizvodjac(noviProizvodjacA.getText());
+					l_izmena.setSifraLeka(txtSifra1A.getText());
+					int jml = Integer.parseInt(novaCenaA.getText());
+					l_izmena.setCena(jml);
+					conn.IzmeniLek(l_izmena);
+					BrisaniPodaci pod = new BrisaniPodaci();
+					Logovan log = new Logovan();
+					pod.setID(pod.getID() + 1);
+					pod.setImeLeka(novoImeA.getText());
+					pod.setProizvodjac(noviProizvodjacA.getText());
+					pod.setSifraLeka(txtSifra1A.getText());
+					pod.setIDKor(log.getSifra());
+					conn.UpisPodatka(pod);
+					Izmeni_Lek_Dialog dialog1 = new Izmeni_Lek_Dialog(txtSifra1A);
+					dialog1.setVisible(true);
+					dialog1.setLocationRelativeTo(lblNaslov1A);
+					novoImeA.setText(null);
+					txtSifra1A.setText(null);
+					noviProizvodjacA.setText(null);
+					novaCenaA.setText(null);
+				}
+				else {
+					Dodaj_Lek_Greska greska1 = new Dodaj_Lek_Greska();
+					greska1.setVisible(true);
+					greska1.setLocationRelativeTo(lblNaslov1A);
+				}
+			}
+				catch(Exception eX) {
+					Dodaj_Lek_Greska greska = new Dodaj_Lek_Greska();
+					greska.setVisible(true);
+					greska.setLocationRelativeTo(lblNaslov1A);
+				}
+				
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 	public class Klik_Admin_Dodavanje implements MouseListener {
