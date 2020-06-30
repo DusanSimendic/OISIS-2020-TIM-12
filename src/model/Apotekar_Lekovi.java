@@ -236,6 +236,7 @@ public class Apotekar_Lekovi extends JFrame {
 		 JLabel pretLupa = new JLabel(new ImageIcon(pretrazi));
 		 pretLupa.setPreferredSize(new Dimension(50, 50));
 		 pretLupa.addMouseListener(new Pretraga());
+
 		 
 		 pretraga.setFont(new Font("Montserrat", Font.ITALIC, 20));
 	     panPretraga.add(pretraga);

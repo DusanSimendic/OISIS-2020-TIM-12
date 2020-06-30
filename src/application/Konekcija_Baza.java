@@ -456,6 +456,36 @@ public List<Lek> PretragaProiz(String s) throws SQLException{
 	 return lekovi1;
 }
 
+public List<Lek> Korpa(String s) throws SQLException{
+	
+	Statement stmt= myCon.createStatement();
+	ResultSet rs=stmt.executeQuery("SELECT ImeLeka, SifraLeka, Proizvodjac, Recept, Cena FROM Lekovi WHERE Proizvodjac LIKE"+
+									"'%"+s+"%'");
+	 
+	 List<Lek> lekovi1 = new ArrayList<Lek>();
+	 while (rs.next()){
+	 String ImeLeka=rs.getString(1); 
+	 String SifraLeka=rs.getString(2);
+	 String Prozivodjac=rs.getString(3);
+	 String Recept=rs.getString(4);
+	 int Cena=rs.getInt(5);
+	 
+	 Lek l = new Lek();
+	 l.setImeLeka(ImeLeka);
+	 l.setSifraLeka(SifraLeka);
+	 l.setProizvodjac(Prozivodjac);
+	 l.setRecept(Recept);
+	 l.setCena(Cena);
+	 
+	 lekovi1.add(l);
+	 }
+	 //obavezno je zatvaranje Statement i ResultSet objekta
+	 rs.close();
+	 stmt.close();
+	 
+	 return lekovi1;
+}
+
 
 public List<Recept> ReceptiSifra() throws SQLException{
 	

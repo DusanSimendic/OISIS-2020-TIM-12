@@ -128,7 +128,7 @@ public class Lekar_Lekovi extends JFrame {
 		 polje1.setPreferredSize(new Dimension(200, 40));
 		 polje1.setBackground(col);
 		 JButton dug1 = new JButton("Lekovi");
-		 dug1.setFont(new Font("Montserrat", Font.ITALIC, 40));
+		 dug1.setFont(new Font("Montserrat", Font.ITALIC, 18));
 			dug1.setPreferredSize(new Dimension(200, 40));
 			dug1.setMinimumSize(new Dimension(300, 150));
 			dug1.setBackground(colPolje);
@@ -138,7 +138,7 @@ public class Lekar_Lekovi extends JFrame {
 		polje2.setPreferredSize(new Dimension(200, 40));
 		polje2.setBackground(col);
 		JButton dug2 = new JButton("Recepti");
-		dug2.setFont(new Font("Montserrat", Font.ITALIC, 30));
+		dug2.setFont(new Font("Montserrat", Font.ITALIC, 18));
 		dug2.setPreferredSize(new Dimension(200, 40));
 		dug2.setMinimumSize(new Dimension(300, 150));
 		dug2.setBackground(colPolje);
@@ -149,7 +149,7 @@ public class Lekar_Lekovi extends JFrame {
 		polje3.setPreferredSize(new Dimension(200, 40));
 		polje3.setBackground(col);
 		JButton dug3 = new JButton("Kreriranje Recepta");
-		dug3.setFont(new Font("Montserrat", Font.ITALIC, 30));
+		dug3.setFont(new Font("Montserrat", Font.ITALIC, 16));
 		dug3.setPreferredSize(new Dimension(200, 40));
 		dug3.setMinimumSize(new Dimension(300, 150));
 		dug3.setBackground(colPolje);
@@ -161,7 +161,7 @@ public class Lekar_Lekovi extends JFrame {
 		polje4.setPreferredSize(new Dimension(200, 40));
 		polje4.setBackground(col);
 		JButton dug4 = new JButton("Odjava");
-		dug4.setFont(new Font("Montserrat", Font.ITALIC, 30));
+		dug4.setFont(new Font("Montserrat", Font.ITALIC, 18));
 		dug4.setPreferredSize(new Dimension(200, 40));
 		dug4.setMinimumSize(new Dimension(300, 150));
 		dug4.setBackground(colPolje);
